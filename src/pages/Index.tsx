@@ -1,7 +1,6 @@
-
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/Button";
+import { Card, CardContent } from "@/shared/components/ui/Card";
 import { Bell, CreditCard, MapPin } from "lucide-react";
 
 const Index = () => {

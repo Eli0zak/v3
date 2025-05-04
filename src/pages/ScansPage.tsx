@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/Button";
 import {
   Table,
   TableBody,
@@ -9,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/shared/components/ui/Table";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { getAnimals } from "@/lib/supabase";

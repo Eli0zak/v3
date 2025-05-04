@@ -1,8 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/Card";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import PetCard from "@/components/PetCard";
 import UpgradePlanDialog from "@/components/UpgradePlanDialog";

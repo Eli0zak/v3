@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/Button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +10,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  AlertDialogTrigger,
+} from "@/shared/components/ui/AlertDialog";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import PetCard from "@/components/PetCard";
 import { useAuth } from "@/contexts/AuthContext";

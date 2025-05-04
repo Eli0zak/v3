@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getAnimalById, recordAnimalScan } from "@/lib/supabase";
 import { Animal } from "@/types";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/Button";
+import { Card, CardContent } from "@/shared/components/ui/Card";
 import { PawPrint, Phone, Mail, AlertTriangle, Home } from "lucide-react";
 
 const TagPage = () => {
