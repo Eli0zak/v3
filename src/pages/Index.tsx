@@ -1,11 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { Button } from "@/shared/components/ui/Button";
+import { Card, CardContent } from "@/shared/components/ui/Card";
 import { Bell, CreditCard, MapPin } from "lucide-react";
 
 const Index = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
@@ -17,11 +15,8 @@ const Index = () => {
           </Link>
           <nav className="flex items-center gap-6">
             <Link to="/" className="font-medium text-white hover:text-white/80">الرئيسية</Link>
-            <Link to="/dashboard" className="font-medium text-white hover:text-white/80">لوحة التحكم</Link>
+            <Link to="/" className="font-medium text-white hover:text-white/80">لوحة التحكم</Link>
             <Link to="/login" className="font-medium text-white hover:text-white/80">تسجيل الدخول</Link>
-            {user?.role === 'admin' && (
-              <Link to="/admin-dashboard" className="font-medium text-white hover:text-white/80">لوحة تحكم المسؤول</Link>
-            )}
           </nav>
         </div>
       </header>
@@ -106,7 +101,7 @@ const Index = () => {
                     <span>دعم أساسي</span>
                   </li>
                 </ul>
-                <Button className="w-full mt-6 subscribe-button" onClick={() => navigate('/subscriptions')}>
+                <Button className="w-full mt-6 subscribe-button">
                   اشترك الآن
                 </Button>
               </CardContent>
@@ -136,7 +131,7 @@ const Index = () => {
                     <span>دعم 24/7</span>
                   </li>
                 </ul>
-                <Button className="w-full mt-6 subscribe-button" onClick={() => navigate('/subscriptions')}>
+                <Button className="w-full mt-6 subscribe-button">
                   اشترك الآن
                 </Button>
               </CardContent>
@@ -166,7 +161,7 @@ const Index = () => {
                     <span>دعم VIP</span>
                   </li>
                 </ul>
-                <Button className="w-full mt-6 subscribe-button" onClick={() => navigate('/subscriptions')}>
+                <Button className="w-full mt-6 subscribe-button">
                   اشترك الآن
                 </Button>
               </CardContent>

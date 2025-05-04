@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/Button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,10 +10,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  AlertDialogTrigger,
+} from "@/shared/components/ui/AlertDialog";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import PetCard from "@/components/PetCard";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 import { getAnimals, deleteAnimal } from "@/lib/supabase";
 import { Animal } from "@/types";
 import { canAddMorePets } from "@/lib/plans";
@@ -101,14 +101,7 @@ const PetsPage = () => {
         )}
 
         {isLoading ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-72 rounded-xl bg-muted animate-pulse"
-              />
-            ))}
-          </div>
+          null
         ) : animals.length === 0 ? (
           <div className="text-center py-12">
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted mb-4">

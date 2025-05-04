@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from '@/shared/components/ui/Button';
 import {
   Form,
   FormControl,
@@ -9,12 +9,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/Form";
+import { Input } from "@/shared/components/ui/Input";
 import AuthLayout from "@/components/layout/AuthLayout";
-import { signIn } from "@/lib/supabase";
+import { signIn } from "@/lib/supabase/auth";
 import { toast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 
 interface LoginFormValues {
   email: string;
@@ -24,16 +24,8 @@ interface LoginFormValues {
 const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { user, loading } = useAuth();
+  const { user, isAuthenticating, authError, updateUserData } = useAuth();
   
-  useEffect(() => {
-    if (user && !loading) {
-      // Check if user is admin based on email
-      const isAdmin = user.email?.includes('admin');
-      navigate(isAdmin ? '/admin/dashboard' : '/dashboard');
-    }
-  }, [user, loading, navigate]);
-
   const form = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
@@ -41,20 +33,30 @@ const Login = () => {
     },
   });
 
+  // Handle navigation when auth state changes
+  useEffect(() => {
+    if (user && !isAuthenticating) {
+      // If already authenticated, redirect based on role
+      const isAdmin = user.email?.includes('admin');
+      navigate(isAdmin ? '/admin/dashboard' : '/dashboard', { replace: true });
+    }
+  }, [user, isAuthenticating, navigate]);
+
   const onSubmit = async (values: LoginFormValues) => {
     try {
       setIsLoading(true);
+      console.log("Attempting login with email:", values.email);
+      
       const response = await signIn(values.email, values.password);
       
       if (response) {
+        await updateUserData();
         toast({
           title: "تم تسجيل الدخول بنجاح!",
           description: "أهلاً بك مجدداً",
         });
-        
-        // Check if user is admin based on email
-        const isAdmin = values.email.includes('admin');
-        navigate(isAdmin ? '/admin/dashboard' : '/dashboard');
+        const isAdmin = response.email?.includes('admin');
+        navigate(isAdmin ? '/admin/dashboard' : '/dashboard', { replace: true });
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -68,31 +70,27 @@ const Login = () => {
     }
   };
 
-  // Don't render the form while checking authentication
-  if (loading) {
+  // Show error message if authentication failed
+  if (authError) {
     return (
       <AuthLayout
-        title="مرحباً بك مجدداً"
-        description="جاري التحقق من حالة تسجيل الدخول..."
+        title="خطأ في تسجيل الدخول"
+        description={authError}
       >
-        <div className="flex items-center justify-center p-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-primary"></div>
+        <div className="flex flex-col items-center gap-4">
+          <Button asChild>
+            <Link to="/login">المحاولة مرة أخرى</Link>
+          </Button>
         </div>
       </AuthLayout>
     );
   }
 
-  if (!user) {
-    return (
-      <AuthLayout
-        title="Loading..."
-        description="Please wait while we verify your login."
-      >
-        <div className="flex items-center justify-center p-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-primary"></div>
-        </div>
-      </AuthLayout>
-    );
+  // If already authenticated, redirect
+  if (user) {
+    const isAdmin = user.email?.includes('admin');
+    navigate(isAdmin ? '/admin/dashboard' : '/dashboard', { replace: true });
+    return null;
   }
 
   return (

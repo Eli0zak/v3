@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/Button";
 import {
   Form,
   FormControl,
@@ -10,8 +10,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/Form";
+import { Input } from "@/shared/components/ui/Input";
 import AuthLayout from "@/components/layout/AuthLayout";
 import { signUp } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
@@ -34,17 +34,6 @@ const Register = () => {
       navigate('/dashboard');
     }
   }, [user, loading, navigate]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (loading) {
-        console.warn("Loading state persisted for too long. Redirecting to login.");
-        navigate('/login');
-      }
-    }, 10000); // 10 seconds timeout
-
-    return () => clearTimeout(timeout);
-  }, [loading, navigate]);
 
   const form = useForm<RegisterFormValues>({
     defaultValues: {
@@ -88,29 +77,7 @@ const Register = () => {
 
   // Don't render the form while checking authentication
   if (loading) {
-    return (
-      <AuthLayout
-        title="إنشاء حساب جديد"
-        description="جاري التحقق من حالة تسجيل الدخول..."
-      >
-        <div className="flex items-center justify-center p-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-primary"></div>
-        </div>
-      </AuthLayout>
-    );
-  }
-
-  if (!user) {
-    return (
-      <AuthLayout
-        title="Loading..."
-        description="Please wait while we verify your account."
-      >
-        <div className="flex items-center justify-center p-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-primary"></div>
-        </div>
-      </AuthLayout>
-    );
+    return null;
   }
 
   return (

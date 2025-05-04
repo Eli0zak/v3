@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/Card";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import PetForm from "@/components/PetForm";
+import PetForm from "@/features/pets/components/PetForm";
 import { useAuth } from "@/contexts/AuthContext";
 import { getAnimalById, updateAnimal } from "@/lib/supabase";
 import { Animal } from "@/types";

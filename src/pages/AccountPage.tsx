@@ -1,10 +1,9 @@
-
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/shared/components/ui/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/Card";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import UpgradePlanDialog from "@/components/UpgradePlanDialog";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/features/auth/context/AuthContext";
 import { updateUserPlan } from "@/lib/supabase";
 import { PlanType } from "@/types";
 import { planFeatures } from "@/lib/plans";
