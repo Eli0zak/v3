@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getAnimalById, recordAnimalScan } from "@/lib/supabase";
 import { Animal } from "@/types";
-import { Button } from "@/shared/components/ui/Button";
-import { Card, CardContent } from "@/shared/components/ui/Card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { PawPrint, Phone, Mail, AlertTriangle, Home } from "lucide-react";
 
 const TagPage = () => {
@@ -46,8 +46,29 @@ const TagPage = () => {
     fetchAnimal();
   }, [id]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.warn("Loading state persisted for too long. Redirecting to error page.");
+        setError("حدثت مشكلة في تحميل البيانات. يرجى المحاولة لاحقًا.");
+        setLoading(false);
+      }
+    }, 10000); // 10 seconds timeout
+
+    return () => clearTimeout(timeout);
+  }, [loading]);
+
   if (loading) {
-    return null;
+    return (
+      <div className="min-h-screen bg-purple-600 flex flex-col items-center justify-center text-white p-4" dir="rtl">
+        <div className="flex items-center justify-center">
+          <img src="/lovable-uploads/d8049df2-619a-44e5-9cd8-c54416c17875.png" alt="PetTouch" className="h-16 w-16" />
+        </div>
+        <h1 className="text-2xl font-bold mt-4 mb-2">التبليغ عن حيوان</h1>
+        <p>جاري التحميل...</p>
+        <div className="mt-4 w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
   }
 
   if (error || !animal) {
